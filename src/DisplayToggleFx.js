@@ -9,7 +9,7 @@ const DisplayToggleFx = {
      * @param {String} _fxClasses
      * @param {String} _cssDisplayVal
      */
-    apply: function(_elem, _fxClasses, _cssDisplayVal) {
+    in: function(_elem, _fxClasses, _cssDisplayVal) {
         _elem.style.display = _cssDisplayVal || 'block';
         _elem.offsetLeft;
 
@@ -52,7 +52,7 @@ const DisplayToggleFx = {
      * @param {Element} _elem
      * @param {String} _fxClasses
      */
-    unapply: function(_elem, _fxClasses) {
+    out: function(_elem, _fxClasses) {
 
         const maxTransitionDuration = DisplayToggleFx.getMaxTransitionDuration(_elem);
 

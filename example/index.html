@@ -17,10 +17,10 @@
 
 
     <script type="text/javascript">
-        DisplayToggleFx.apply(document.getElementById('testObj'), ['visible']);
+        DisplayToggleFx.in(document.getElementById('testObj'), ['visible']);
 
         setTimeout(function() {
-            DisplayToggleFx.unapply(document.getElementById('testObj'), ['visible']);
+            DisplayToggleFx.out(document.getElementById('testObj'), ['visible']);
         }, 3000);
 
     </script>

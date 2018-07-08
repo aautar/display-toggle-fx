@@ -5,7 +5,7 @@ test('DisplayToggleFx.apply adds classes to element', () => {
 
     $('body').html(`<div id="telem" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
     
-    DisplayToggleFx.apply(document.getElementById('telem'), ["fxClassA", "fxClassB"]);
+    DisplayToggleFx.in(document.getElementById('telem'), ["fxClassA", "fxClassB"]);
 
     expect($('#telem').hasClass('fxClassA')).toEqual(true);
     expect($('#telem').hasClass('fxClassB')).toEqual(true);
@@ -15,7 +15,7 @@ test('DisplayToggleFx.apply changes element display state', () => {
 
     $('body').html(`<div id="telem" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
     
-    DisplayToggleFx.apply(document.getElementById('telem'), ["fxClassA", "fxClassB"]);
+    DisplayToggleFx.in(document.getElementById('telem'), ["fxClassA", "fxClassB"]);
 
     expect($('#telem').css('display')).toEqual('block');
 });
@@ -24,7 +24,7 @@ test('DisplayToggleFx.unapply removes classes from element', () => {
 
     $('body').html(`<div id="telem" class="fxClassA fxClassB" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
     
-    DisplayToggleFx.unapply(document.getElementById('telem'), ["fxClassA", "fxClassB"]);
+    DisplayToggleFx.out(document.getElementById('telem'), ["fxClassA", "fxClassB"]);
 
     expect($('#telem').hasClass('fxClassA')).toEqual(false);
     expect($('#telem').hasClass('fxClassB')).toEqual(false);
@@ -34,7 +34,7 @@ test('DisplayToggleFx.unapply sets display:none on element', (done) => {
 
     $('body').html(`<div id="telem" class="fxClassA fxClassB" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
     
-    DisplayToggleFx.unapply(document.getElementById('telem'), ["fxClassA", "fxClassB"]);
+    DisplayToggleFx.out(document.getElementById('telem'), ["fxClassA", "fxClassB"]);
 
     setTimeout(() => { 
         expect($('#telem').css('display')).toEqual('none');
