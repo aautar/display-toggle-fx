@@ -1,0 +1,23 @@
+{
+  "name": "display-toggle-fx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/DisplayToggleFx.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aautar/display-toggle-fx.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aautar/display-toggle-fx/issues"
+  },
+  "homepage": "https://github.com/aautar/display-toggle-fx#readme",
+  "devDependencies": {
+    "jest": "^23.3.0",
+    "jquery": "^3.3.1"
+  }
+}

@@ -23,11 +23,10 @@ const DisplayToggleFx = {
      * @returns {Number}
      */
     getMaxTransitionDuration: function(_elem) {
-        const allTransitionDurations = window.getComputedStyle(_elem).getPropertyValue('transition-duration');
-        allTransitionDurations.split(',');
+        var allTransitionDurations = (window.getComputedStyle(_elem).getPropertyValue('transition-duration')) || '';
+        allTransitionDurations = allTransitionDurations.split(',');
         
-        const maxDurationMs = 0;
-
+        var maxDurationMs = 0;
         allTransitionDurations.forEach(function(_dur) {
             if(_dur.indexOf('s') !== -1) {
                 const durationMs = (_dur.replace(/s/g, '')) * 1000.0;
@@ -55,7 +54,7 @@ const DisplayToggleFx = {
      */
     unapply: function(_elem, _fxClasses) {
 
-        const maxTransitionDuration = Play.getMaxTransitionDuration(_elem);
+        const maxTransitionDuration = DisplayToggleFx.getMaxTransitionDuration(_elem);
 
         for(let i=0; i<_fxClasses.length; i++) {       
             _elem.classList.remove(_fxClasses[i]);
@@ -67,4 +66,6 @@ const DisplayToggleFx = {
     }
 };
 
-export { DisplayToggleFx }
+if(typeof module !== 'undefined' && module.exports) {
+    module.exports = DisplayToggleFx;
+}
