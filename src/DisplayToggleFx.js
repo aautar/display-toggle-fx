@@ -38,7 +38,7 @@ const DisplayToggleFx = {
 
             if(_dur.indexOf('ms') !== -1) {
                 const durationMs = (_dur.replace(/ms/g, ''));
-                if(durationMs > minDurationMs) {
+                if(durationMs > maxDurationMs) {
                     maxDurationMs = durationMs;
                 }
                 return;
