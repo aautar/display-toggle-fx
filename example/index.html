@@ -19,6 +19,12 @@
     <script type="text/javascript">
         DisplayToggleFx.in(document.getElementById('testObj'), ['visible']);
 
+
+        // v1.1, we can interrupt the transition out
+        setTimeout(function() {
+            DisplayToggleFx.in(document.getElementById('testObj'), ['visible']);
+        }, 3300);
+
         setTimeout(function() {
             DisplayToggleFx.out(document.getElementById('testObj'), ['visible']);
         }, 3000);

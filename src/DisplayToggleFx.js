@@ -4,12 +4,20 @@
  */
 const DisplayToggleFx = {
 
+    elementOutTimeouts: new Map(),
+
     /**
      * @param {Element} _elem
      * @param {String} _fxClasses
      * @param {String} _cssDisplayVal
      */
     in: function(_elem, _fxClasses, _cssDisplayVal) {
+
+        const timeoutId = DisplayToggleFx.elementOutTimeouts.get(_elem) || null;
+        if(timeoutId !== null) {
+            clearTimeout(timeoutId);
+        }
+
         _elem.style.display = _cssDisplayVal || 'block';
         _elem.offsetLeft;
 
@@ -60,9 +68,11 @@ const DisplayToggleFx = {
             _elem.classList.remove(_fxClasses[i]);
         }
 
-        setTimeout(function() {
+        const timeoutId = setTimeout(function() {
             _elem.style.display = "none";
         }, maxTransitionDuration);
+
+        DisplayToggleFx.elementOutTimeouts.set(_elem, timeoutId);
     }
 };
 
