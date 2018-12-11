@@ -25,28 +25,23 @@ The library assumes an element is styled in its `display:none` state:
 
 ```css
 #testObj.transitionClass {
+  display: flex;
   opacity: 1;
   transform: none;   
 }
 ```
 
-(Note that no `display` rule is specified, as the library will take care of applying it)
+(Note that if no `display` rule is specified, the library will assume `block` when transitioning in)
 
 ### Transition In
-Go from `display:none` → `display:block` and apply the transition rules defined in the CSS class `transitionClass`
+Go from `display:none` → `display:flex` and apply the transition rules defined in the CSS class `transitionClass`
 
 ```javascript
 DisplayToggleFx.in(document.getElementById('testObj'), ['transitionClass']);
 ```
 
-Go from `display:none` → `display:flex` and apply the transition rules defined in the CSS class `transitionClass`
-
-```javascript
-DisplayToggleFx.in(document.getElementById('testObj'), ['transitionClass'], 'flex');
-```
-
 ### Transition Out
-Remove the CSS class `transitionClass` and go from `display:xxxx` → `display:none` when the transition is complete. 
+Remove the CSS class `transitionClass` and go from `display:flex` → `display:none` when the transition is complete. 
 
 ```javascript
 DisplayToggleFx.out(document.getElementById('testObj'), ['transitionClass']);
