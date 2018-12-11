@@ -8,6 +8,10 @@ This is small library that addresses a few issues around working with CSS transi
 
 - When transitioning out and going to `display:none`, the `display:none` CSS rule must be applied after all transitions effects are played to completion. If not, the element will disappear instantly, before any transition effects are rendered.
 
+## Philosophy
+
+As much as possible the library tries to work with and respect the rules defined in CSS classes applied to DOM elements.
+
 ## Usage
 
 The library assumes an element is styled in its `display:none` state:
