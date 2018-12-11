@@ -16,14 +16,26 @@ const DisplayToggleFx = {
         if(timeoutId !== null) {
             clearTimeout(timeoutId);
         }
+        
+        // apply classes and get computed display
+        for(let i=0; i<_fxClasses.length; i++) {
+            _elem.classList.add(_fxClasses[i]);
+        }        
 
         const computedDisplay = (window.getComputedStyle(_elem).getPropertyValue('display'));
+        
+        // remove classes and trigger reflow to render initial state
+        for(let i=0; i<_fxClasses.length; i++) {       
+            _elem.classList.remove(_fxClasses[i]);
+        }
+        _elem.offsetLeft;
+
+        // apply computed display value and trigger reflow
         if(computedDisplay === 'none') {
             _elem.style.display = 'block';
         } else {
             _elem.style.display = computedDisplay;
-        }
-
+        }        
         _elem.offsetLeft;
 
         for(let i=0; i<_fxClasses.length; i++) {
