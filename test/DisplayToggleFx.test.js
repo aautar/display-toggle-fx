@@ -1,7 +1,7 @@
 const $ = require('jquery');
 const DisplayToggleFx = require('../src/DisplayToggleFx.js');
 
-test('DisplayToggleFx.apply adds classes to element', () => {
+test('DisplayToggleFx.in adds classes to element', () => {
 
     $('body').html(`<div id="telem" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
     
@@ -11,7 +11,7 @@ test('DisplayToggleFx.apply adds classes to element', () => {
     expect($('#telem').hasClass('fxClassB')).toEqual(true);
 });
 
-test('DisplayToggleFx.apply changes element display state', () => {
+test('DisplayToggleFx.in changes element display state', () => {
 
     $('body').html(`<div id="telem" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
     
@@ -20,7 +20,7 @@ test('DisplayToggleFx.apply changes element display state', () => {
     expect($('#telem').css('display')).toEqual('block');
 });
 
-test('DisplayToggleFx.unapply removes classes from element', () => {
+test('DisplayToggleFx.out removes classes from element', () => {
 
     $('body').html(`<div id="telem" class="fxClassA fxClassB" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
     
@@ -30,7 +30,7 @@ test('DisplayToggleFx.unapply removes classes from element', () => {
     expect($('#telem').hasClass('fxClassB')).toEqual(false);
 });
 
-test('DisplayToggleFx.unapply sets display:none on element', (done) => {
+test('DisplayToggleFx.out sets display:none on element', (done) => {
 
     $('body').html(`<div id="telem" class="fxClassA fxClassB" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
     

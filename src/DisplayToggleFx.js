@@ -9,16 +9,21 @@ const DisplayToggleFx = {
     /**
      * @param {Element} _elem
      * @param {String} _fxClasses
-     * @param {String} _cssDisplayVal
      */
-    in: function(_elem, _fxClasses, _cssDisplayVal) {
+    in: function(_elem, _fxClasses) {
 
         const timeoutId = DisplayToggleFx.elementOutTimeouts.get(_elem) || null;
         if(timeoutId !== null) {
             clearTimeout(timeoutId);
         }
 
-        _elem.style.display = _cssDisplayVal || 'block';
+        const computedDisplay = (window.getComputedStyle(_elem).getPropertyValue('display'));
+        if(computedDisplay === 'none') {
+            _elem.style.display = 'block';
+        } else {
+            _elem.style.display = computedDisplay;
+        }
+
         _elem.offsetLeft;
 
         for(let i=0; i<_fxClasses.length; i++) {
