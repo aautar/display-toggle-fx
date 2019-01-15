@@ -31,11 +31,7 @@ const DisplayToggleFx = {
         _elem.offsetLeft;
 
         // apply computed display value and trigger reflow
-        if(computedDisplay === 'none') {
-            _elem.style.display = 'block';
-        } else {
-            _elem.style.display = computedDisplay;
-        }        
+        _elem.style.display = computedDisplay;        
         _elem.offsetLeft;
 
         for(let i=0; i<_fxClasses.length; i++) {

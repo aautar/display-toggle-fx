@@ -35,7 +35,7 @@ The library assumes an element is styled in its `display:none` state:
 }
 ```
 
-(Note that if no `display` rule is specified, the library will assume `block` when transitioning in)
+(Note, versions prior to v4.0.0 would automatically apply `display: block` if the computed display style was `none`. This is no longer the case as of v4.0.0 as it leads to unintuitive and unexpected behaviors, especially when working with media queries, where it's expected that the media query rules take precedence over transition styling rules)
 
 ### Transition In
 Go from `display:none` → `display:flex` and apply the transition rules defined in the CSS class `transitionClass`
