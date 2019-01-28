@@ -11,15 +11,6 @@ test('DisplayToggleFx.in adds classes to element', () => {
     expect($('#telem').hasClass('fxClassB')).toEqual(true);
 });
 
-test('DisplayToggleFx.in changes element display state', () => {
-
-    $('body').html(`<div id="telem" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
-    
-    DisplayToggleFx.in(document.getElementById('telem'), ["fxClassA", "fxClassB"]);
-
-    expect($('#telem').css('display')).toEqual('block');
-});
-
 test('DisplayToggleFx.out removes classes from element', () => {
 
     $('body').html(`<div id="telem" class="fxClassA fxClassB" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
@@ -30,14 +21,55 @@ test('DisplayToggleFx.out removes classes from element', () => {
     expect($('#telem').hasClass('fxClassB')).toEqual(false);
 });
 
-test('DisplayToggleFx.out sets display:none on element', (done) => {
+test('DisplayToggleFx.in changes element display state based on window.getComputedStyle', () => {
 
-    $('body').html(`<div id="telem" class="fxClassA fxClassB" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
+    $('body').html(`<div id="telem" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
+    
+    window.getComputedStyle = function(_elem) {
+        return {
+            getPropertyValue: function(_key) {
+                if(_key === `transition-duration`) {
+                    return `0.3s, 0.9s`;
+                }
+
+                if(_key === `display`) {
+                    return `block`;
+                }
+            }
+        }
+    };    
+
+    DisplayToggleFx.in(document.getElementById('telem'), ["fxClassA", "fxClassB"]);
+
+    expect($('#telem').css('display')).toEqual('block');
+});
+
+test('DisplayToggleFx.out removes inline display style from element (reverts to style declared via base CSS class)', (done) => {
+
+    $('body').html(`        
+        <div id="telem" class="fxClassA fxClassB" style="display:block; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`
+    );
+
+    document.getElementById('telem').style.removeProperty = (p) => {
+        if(p === `display`) { 
+            document.getElementById('telem').style.display = '-----'; // sentinal string to indicate removal
+        }
+    };
+
+    window.getComputedStyle = function(_elem) {
+        return {
+            getPropertyValue: function(_key) {
+                if(_key === `transition-duration`) {
+                    return "0.3s, 0.9s";
+                }
+            }
+        }
+    };    
     
     DisplayToggleFx.out(document.getElementById('telem'), ["fxClassA", "fxClassB"]);
 
     setTimeout(() => { 
-        expect($('#telem').css('display')).toEqual('none');
+        expect(document.getElementById('telem').style.display).toEqual('-----');
         done();
     }, 901);
 });
@@ -48,8 +80,10 @@ test('DisplayToggleFx.getMaxTransitionDuration returns max duration', () => {
     
     window.getComputedStyle = function(_elem) {
         return {
-            getPropertyValue: function() {
-                return "0.3s, 0.9s";
+            getPropertyValue: function(_key) {
+                if(_key === `transition-duration`) {
+                    return "0.3s, 0.9s";
+                }
             }
         }
     };

@@ -28,15 +28,19 @@ const DisplayToggleFx = {
         for(let i=0; i<_fxClasses.length; i++) {       
             _elem.classList.remove(_fxClasses[i]);
         }
-        _elem.offsetLeft;
+        DisplayToggleFx.forceReflow(_elem);
 
         // apply computed display value and trigger reflow
         _elem.style.display = computedDisplay;        
-        _elem.offsetLeft;
+        DisplayToggleFx.forceReflow(_elem);
 
         for(let i=0; i<_fxClasses.length; i++) {
             _elem.classList.add(_fxClasses[i]);
         }
+    },
+
+    forceReflow: function(_elem) {
+        _elem.offsetLeft;
     },
 
     /**
@@ -82,7 +86,7 @@ const DisplayToggleFx = {
         }
 
         const timeoutId = setTimeout(function() {
-            _elem.style.display = "none";
+            _elem.style.removeProperty('display');
         }, maxTransitionDuration);
 
         DisplayToggleFx.elementOutTimeouts.set(_elem, timeoutId);
