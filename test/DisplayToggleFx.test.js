@@ -74,6 +74,32 @@ test('DisplayToggleFx.out removes inline display style from element (reverts to 
     }, 901);
 });
 
+test('DisplayToggleFx.out calls completion callback', (done) => {
+
+    const onOutComplete = jest.fn();
+
+    $('body').html(`        
+        <div id="telem" class="fxClassA fxClassB" style="display:block; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`
+    );
+
+    window.getComputedStyle = function(_elem) {
+        return {
+            getPropertyValue: function(_key) {
+                if(_key === `transition-duration`) {
+                    return "0.3s, 0.9s";
+                }
+            }
+        }
+    };    
+    
+    DisplayToggleFx.out(document.getElementById('telem'), ["fxClassA", "fxClassB"], onOutComplete);
+
+    setTimeout(() => { 
+        expect(onOutComplete).toHaveBeenCalledTimes(1);
+        done();
+    }, 901);
+});
+
 test('DisplayToggleFx.getMaxTransitionDuration returns max duration', () => {
 
     $('body').html(`<div id="telem" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);

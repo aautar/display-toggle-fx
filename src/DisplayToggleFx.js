@@ -76,8 +76,9 @@ const DisplayToggleFx = {
     /**
      * @param {Element} _elem
      * @param {String} _fxClasses
+     * @param {Function|undefined} _onOutComplete
      */
-    out: function(_elem, _fxClasses) {
+    out: function(_elem, _fxClasses, _onOutComplete) {
 
         const maxTransitionDuration = DisplayToggleFx.getMaxTransitionDuration(_elem);
 
@@ -87,6 +88,11 @@ const DisplayToggleFx = {
 
         const timeoutId = setTimeout(function() {
             _elem.style.removeProperty('display');
+
+            if(_onOutComplete) {
+                _onOutComplete();
+            }
+            
         }, maxTransitionDuration);
 
         DisplayToggleFx.elementOutTimeouts.set(_elem, timeoutId);
