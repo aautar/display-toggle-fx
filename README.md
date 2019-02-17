@@ -50,6 +50,8 @@ DisplayToggleFx.out(document.getElementById('testObj'), ['transitionClass']);
 ```
 
 ## Other things
-- Prior to v4.0.0, `DisplayToggleFx.out()` would automatically apply `display:none` if the computed display style was `none`. This is no longer the case as of v4.0.0 as it leads to unintuitive and unexpected behaviors, especially when working with media queries, where it's expected that the media query rules take precedence over transition styling rules)
+- Prior to v4.0.0, `DisplayToggleFx.in()` would automatically apply `display:none` if the computed display style was `none` (typically occurred if a non-display-none style wasn't specified). This is no longer the case as of v4.0.0 as it leads to unintuitive and unexpected behaviors, especially when working with media queries, where it's expected that the media query rules take precedence over transition styling rules).
+
+- Prior to v4.0.0, `DisplayToggleFx.out()` would automatically apply and leave an inline style of `display:none` on the element. This is no longer the case and any inline `display` styles applied are removed when the transition is complete.
 
 - Prior to `v2.0.0` transitions were not interruptable (i.e. it was not possible to stop transitioning out half way though, and switch to transitioning in). `v2.0.0` fixes this and allow for interrupting transitions.
