@@ -17,37 +17,51 @@ const DisplayToggleFx = {
             clearTimeout(timeoutId);
         }
 
-        const preWidth = (window.getComputedStyle(_elem).getPropertyValue('width'));
-        const preHeight = (window.getComputedStyle(_elem).getPropertyValue('height'));
-        
+        const transitionProps = (window.getComputedStyle(_elem).getPropertyValue('transition-property')); // command-delimited string       
+        const isTransitioningProperty = function(_propName) {
+            if(transitionProps.indexOf(_propName) === -1) {
+                return false;
+            }
+
+            return true;
+        };
+
+        const currentWidth = (window.getComputedStyle(_elem).getPropertyValue('width'));
+        const currentHeight = (window.getComputedStyle(_elem).getPropertyValue('height'));        
+
         // apply classes and get computed display
         for(let i=0; i<_fxClasses.length; i++) {
             _elem.classList.add(_fxClasses[i]);
         }        
 
-        const computedDisplay = (window.getComputedStyle(_elem).getPropertyValue('display'));
-        const computedWidth = (window.getComputedStyle(_elem).getPropertyValue('width'));
-        const computedHeight = (window.getComputedStyle(_elem).getPropertyValue('height'));
+        const futureDisplay = (window.getComputedStyle(_elem).getPropertyValue('display'));
+        const futureWidth = (window.getComputedStyle(_elem).getPropertyValue('width'));
+        const futureHeight = (window.getComputedStyle(_elem).getPropertyValue('height'));
         
         // remove classes and trigger reflow to render initial state
         for(let i=0; i<_fxClasses.length; i++) {       
             _elem.classList.remove(_fxClasses[i]);
         }
 
-        _elem.style.width = preWidth;
-        _elem.style.height = preHeight;
+        if(isTransitioningProperty('width')) {
+            _elem.style.width = currentWidth;
+        }
+
+        if(isTransitioningProperty('height')) {
+            _elem.style.height = currentHeight;
+        }
 
         DisplayToggleFx.forceReflow(_elem);
 
         // apply computed display value and trigger reflow
-        _elem.style.display = computedDisplay;        
+        _elem.style.display = futureDisplay;        
 
-        if(computedWidth !== preWidth) { // can we see if 'auto' is actually set?
-            _elem.style.width = computedWidth;
+        if(isTransitioningProperty('width')) {
+            _elem.style.width = futureWidth;
         }
 
-        if(computedHeight !== preHeight) {
-            _elem.style.height = computedHeight;
+        if(isTransitioningProperty('height')) {
+            _elem.style.height = futureHeight;
         }        
 
         DisplayToggleFx.forceReflow(_elem);
