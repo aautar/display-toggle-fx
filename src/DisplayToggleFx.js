@@ -16,6 +16,9 @@ const DisplayToggleFx = {
         if(timeoutId !== null) {
             clearTimeout(timeoutId);
         }
+
+        const preWidth = (window.getComputedStyle(_elem).getPropertyValue('width'));
+        const preHeight = (window.getComputedStyle(_elem).getPropertyValue('height'));
         
         // apply classes and get computed display
         for(let i=0; i<_fxClasses.length; i++) {
@@ -23,15 +26,30 @@ const DisplayToggleFx = {
         }        
 
         const computedDisplay = (window.getComputedStyle(_elem).getPropertyValue('display'));
+        const computedWidth = (window.getComputedStyle(_elem).getPropertyValue('width'));
+        const computedHeight = (window.getComputedStyle(_elem).getPropertyValue('height'));
         
         // remove classes and trigger reflow to render initial state
         for(let i=0; i<_fxClasses.length; i++) {       
             _elem.classList.remove(_fxClasses[i]);
         }
+
+        _elem.style.width = preWidth;
+        _elem.style.height = preHeight;
+
         DisplayToggleFx.forceReflow(_elem);
 
         // apply computed display value and trigger reflow
         _elem.style.display = computedDisplay;        
+
+        if(computedWidth !== preWidth) { // can we see if 'auto' is actually set?
+            _elem.style.width = computedWidth;
+        }
+
+        if(computedHeight !== preHeight) {
+            _elem.style.height = computedHeight;
+        }        
+
         DisplayToggleFx.forceReflow(_elem);
 
         for(let i=0; i<_fxClasses.length; i++) {
@@ -82,13 +100,16 @@ const DisplayToggleFx = {
 
         const maxTransitionDuration = DisplayToggleFx.getMaxTransitionDuration(_elem);
 
+        _elem.style.removeProperty('width');
+        _elem.style.removeProperty('height');
+
         for(let i=0; i<_fxClasses.length; i++) {       
             _elem.classList.remove(_fxClasses[i]);
         }
 
         const timeoutId = setTimeout(function() {
             _elem.style.removeProperty('display');
-
+            
             if(_onOutComplete) {
                 _onOutComplete();
             }
