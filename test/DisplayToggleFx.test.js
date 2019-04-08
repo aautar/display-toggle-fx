@@ -35,6 +35,18 @@ test('DisplayToggleFx.in changes element display state based on window.getComput
                 if(_key === `display`) {
                     return `block`;
                 }
+
+                if(_key === `transition-property`) {
+                    return `opacity, transform`;
+                }
+
+                if(_key === `width`) {
+                    return `64px`;
+                }
+
+                if(_key === `height`) {
+                    return `64px`;
+                }                
             }
         }
     };    
