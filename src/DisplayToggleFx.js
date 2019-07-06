@@ -2,7 +2,7 @@
  * DisplayToggleFx helps with applying/unapplying CSS classes that trigger CSS transitions, 
  * where the DOM element needs to change from a display:none state → displayed state, and vice-versa
  * 
- * v1.2 also adds support for cases where an element's width or height changes to 'auto'
+ * v4.1 adds support for cases where an element's width or height changes to 'auto'
  */
 const DisplayToggleFx = {
 
