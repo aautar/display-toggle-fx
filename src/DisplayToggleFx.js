@@ -1,6 +1,8 @@
 /**
  * DisplayToggleFx helps with applying/unapplying CSS classes that trigger CSS transitions, 
  * where the DOM element needs to change from a display:none state → displayed state, and vice-versa
+ * 
+ * v1.2 also adds support for cases where an element's width or height changes to 'auto'
  */
 const DisplayToggleFx = {
 
@@ -17,6 +19,8 @@ const DisplayToggleFx = {
             clearTimeout(timeoutId);
         }
 
+        // Get which properties are setup to transition
+        // We'll get all of them, but we really only care about dimensional properties (width, height)
         const transitionProps = (window.getComputedStyle(_elem).getPropertyValue('transition-property')); // command-delimited string       
         const isTransitioningProperty = function(_propName) {
             if(transitionProps.indexOf(_propName) === -1) {
@@ -29,7 +33,7 @@ const DisplayToggleFx = {
         const currentWidth = (window.getComputedStyle(_elem).getPropertyValue('width'));
         const currentHeight = (window.getComputedStyle(_elem).getPropertyValue('height'));        
 
-        // apply classes and get computed display
+        // apply fx classes, compute future state of display and properties being transitioned
         for(let i=0; i<_fxClasses.length; i++) {
             _elem.classList.add(_fxClasses[i]);
         }        
@@ -38,7 +42,7 @@ const DisplayToggleFx = {
         const futureWidth = (window.getComputedStyle(_elem).getPropertyValue('width'));
         const futureHeight = (window.getComputedStyle(_elem).getPropertyValue('height'));
         
-        // remove classes and trigger reflow to render initial state
+        // remove classes, reset width and height to initial values, and trigger reflow to render initial state
         for(let i=0; i<_fxClasses.length; i++) {       
             _elem.classList.remove(_fxClasses[i]);
         }
@@ -53,7 +57,7 @@ const DisplayToggleFx = {
 
         DisplayToggleFx.forceReflow(_elem);
 
-        // apply computed display value and trigger reflow
+        // apply computed display value, apply computed width and height values (in cases where width, height is being transitioned), and trigger reflow
         _elem.style.display = futureDisplay;        
 
         if(isTransitioningProperty('width')) {
