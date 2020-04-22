@@ -2,11 +2,15 @@
 
 ## Motivation
 
-This is small library that addresses a few issues when working with CSS transitions & elements that need to transition to or from the `display:none` state.
+This is small library that addresses a few issues that pop up when working with CSS transitions on elements that need to transition to or from the `display:none` state and/or elements that needs to transition to a width or height value of `auto`.
 
-- When transitioning "in" and going from `display:none` to a display state where the element is part of the document flow (e.g. `display:block`), [Reflow](https://developer.mozilla.org/en-US/docs/Glossary/Reflow) much occur. If not, the element is displayed instanlty in the DOM, in its final state (as if all transitions have been instantly played to completion). 
+Issues tackled:
+
+- When transitioning "in" and going from `display:none` to a display state where the element is part of the document flow (e.g. `display:block`), [Reflow](https://developer.mozilla.org/en-US/docs/Glossary/Reflow) must occur. If not, the element is displayed instanlty in the DOM, in its final state (as if all transitions have been instantly played to completion). 
 
 - When transitioning "out" and going to `display:none`, the `display:none` CSS rule must be applied after all transitions effects are played to completion. If not, the element will disappear instantly, before any transition effects are rendered.
+
+- When transitioning "in" and going to a width or height value of `auto`, the element will instantly assume its final size and not transition smoothly to it. Reflow must occur, but `auto` also can't be used here and the width/height of the element needs to be computed as an actual value first.
 
 ## Philosophy
 

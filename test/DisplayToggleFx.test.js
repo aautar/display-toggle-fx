@@ -35,6 +35,18 @@ test('DisplayToggleFx.in changes element display state based on window.getComput
                 if(_key === `display`) {
                     return `block`;
                 }
+
+                if(_key === `transition-property`) {
+                    return `opacity, transform`;
+                }
+
+                if(_key === `width`) {
+                    return `64px`;
+                }
+
+                if(_key === `height`) {
+                    return `64px`;
+                }                
             }
         }
     };    
@@ -100,7 +112,7 @@ test('DisplayToggleFx.out calls completion callback', (done) => {
     }, 901);
 });
 
-test('DisplayToggleFx.getMaxTransitionDuration returns max duration', () => {
+test('DisplayToggleFx.getMaxTransitionDuration returns max duration for values in seconds', () => {
 
     $('body').html(`<div id="telem" style="display:none; transition: opacity 0.3s ease-in, transform 0.9s linear;"></div>`);
     
@@ -117,4 +129,23 @@ test('DisplayToggleFx.getMaxTransitionDuration returns max duration', () => {
     const maxDurMs = DisplayToggleFx.getMaxTransitionDuration(document.getElementById('telem'));
 
     expect(maxDurMs).toEqual(900);
+});
+
+test('DisplayToggleFx.getMaxTransitionDuration returns max duration for values in milliseconds', () => {
+
+    $('body').html(`<div id="telem" style="display:none; transition: opacity 0.3s ease-in, transform 800ms linear;"></div>`);
+    
+    window.getComputedStyle = function(_elem) {
+        return {
+            getPropertyValue: function(_key) {
+                if(_key === `transition-duration`) {
+                    return "0.3s, 800ms";
+                }
+            }
+        }
+    };
+
+    const maxDurMs = DisplayToggleFx.getMaxTransitionDuration(document.getElementById('telem'));
+
+    expect(maxDurMs).toEqual(800.0);
 });
