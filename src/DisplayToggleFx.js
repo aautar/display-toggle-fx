@@ -77,10 +77,13 @@ const DisplayToggleFx = {
      * @param {Element} _elem
      * @param {String} _fxClasses
      * @param {Function|undefined} _onOutComplete
+     * @param {Number} _transitionDurationOverrideMs
      */
-    out: function(_elem, _fxClasses, _onOutComplete) {
-
-        const maxTransitionDuration = DisplayToggleFx.getMaxTransitionDuration(_elem);
+    out: function(_elem, _fxClasses, _onOutComplete, _transitionDurationOverrideMs) {
+        let maxTransitionDuration = DisplayToggleFx.getMaxTransitionDuration(_elem);
+        if(_transitionDurationOverrideMs) {
+            maxTransitionDuration = _transitionDurationOverrideMs;
+        }
 
         for(let i=0; i<_fxClasses.length; i++) {       
             _elem.classList.remove(_fxClasses[i]);
