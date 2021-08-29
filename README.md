@@ -58,6 +58,20 @@ Remove the CSS class `transitionClass`
 DisplayToggleFx.out(document.getElementById('testObj'), ['transitionClass']);
 ```
 
+## Utility Methods
+
+### Force Reflow
+Force reflow for a specific DOM element
+```javascript
+DisplayToggleFx.forceReflow(document.getElementById('testObj'));
+```
+
+### Get transition duration
+Get the total time (in milliseconds) it takes to complete all transitions, across all classes applied. Calling this method only makes sense after `DisplayToggleFx.in()` has already been called.
+```javascript
+DisplayToggleFx.getMaxTransitionDuration(document.getElementById('testObj'));
+```
+
 ## Other things
 - Prior to v4.0.0, `DisplayToggleFx.in()` would automatically apply `display:none` if the computed display style was `none` (typically occurred if a non-display-none style wasn't specified). This is no longer the case as of v4.0.0 as it leads to unintuitive and unexpected behaviors, especially when working with media queries, where it's expected that the media query rules take precedence over transition styling rules).
 
