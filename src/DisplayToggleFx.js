@@ -50,19 +50,19 @@ const DisplayToggleFx = {
     getMaxTransitionDuration: function(_elem) {
         var allTransitionDurations = (window.getComputedStyle(_elem).getPropertyValue('transition-duration')) || '';
         allTransitionDurations = allTransitionDurations.split(',');
-        
+
         var maxDurationMs = 0;
         allTransitionDurations.forEach(function(_dur) {
-            if(_dur.indexOf('s') !== -1) {
-                const durationMs = (_dur.replace(/s/g, '')) * 1000.0;
+            if(_dur.indexOf('ms') !== -1) { // note that this parser matching rule is more specific (more letters; 'ms' vs 's') and has to come first
+                const durationMs = (_dur.replace(/ms/g, '')) * 1.0;
                 if(durationMs > maxDurationMs) {
                     maxDurationMs = durationMs;
                 }
                 return;
             }
 
-            if(_dur.indexOf('ms') !== -1) {
-                const durationMs = (_dur.replace(/ms/g, ''));
+            if(_dur.indexOf('s') !== -1) {
+                const durationMs = (_dur.replace(/s/g, '')) * 1000.0;
                 if(durationMs > maxDurationMs) {
                     maxDurationMs = durationMs;
                 }
