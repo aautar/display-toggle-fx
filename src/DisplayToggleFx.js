@@ -3,12 +3,11 @@
  * where the DOM element needs to change from a display:none state → displayed state, and vice-versa
  */
 const DisplayToggleFx = {
-
     elementOutTimeouts: new Map(),
 
     /**
      * @param {Element} _elem
-     * @param {String} _fxClasses
+     * @param {String[]} _fxClasses
      */
     in: function(_elem, _fxClasses) {
 
@@ -75,7 +74,7 @@ const DisplayToggleFx = {
 
     /**
      * @param {Element} _elem
-     * @param {String} _fxClasses
+     * @param {String[]} _fxClasses
      * @param {Function|undefined} _onOutComplete
      * @param {Number|undefined} _transitionDurationOverrideMs
      */
